@@ -24,4 +24,4 @@ _testmain.go
 conf
 info
 log
-
+snapshot/**
