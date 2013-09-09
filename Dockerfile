@@ -7,6 +7,7 @@ MAINTAINER Geoffrey Hayes <hayesgm@gmail.com>
 
 RUN mkdir -p /srv/journal
 RUN wget https://github.com/hayesgm/journal/releases/download/v0.0.1pre/journal.linux -o /srv/journal/journal
+RUN chmod +x /srv/journal/journal
 
 ENTRYPOINT ["/srv/journal/journal"]
 
