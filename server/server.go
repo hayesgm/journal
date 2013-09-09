@@ -4,35 +4,33 @@ import (
   "net/http"
   "log"
   "html/template"
-  "path"
-  "io/ioutil"
   "fmt"
+  "github.com/cratonica/embed"
+  "github.com/hayesgm/journal/assets"
 )
 
-func getHandler(assetsDir, filename string) func(w http.ResponseWriter, req *http.Request) {
+
+func getHandler(name, value string) func(w http.ResponseWriter, req *http.Request) {
   return func(w http.ResponseWriter, req *http.Request) {
-    tmpl := template.Must(template.ParseFiles(path.Join(assetsDir,filename)))
+    tmpl := template.Must(template.New(name).Parse(value))
     tmpl.Execute(w, nil)
   }
 }
 
-func RegisterAssets(assetsDir, root string) {
+func RegisterAssets(root string) {
   log.Println("Registering Static Assets...")
 
-  files, err := ioutil.ReadDir(assetsDir)
-  if err != nil {
-    panic(err) // This is serious
-  }
+  assetMap, _ := embed.Unpack(assets.Assets)
 
-  for _, file := range files {
-    log.Printf("\tRegistering %v\n", file.Name())
-    route := fmt.Sprintf("/%s", file.Name())
+  for asset, value := range assetMap {
+    log.Printf("\tRegistering %v\n", asset)
+    route := fmt.Sprintf("/%s", asset)
     
-    http.Handle(route, http.HandlerFunc(getHandler(assetsDir, file.Name())))
-    if (file.Name() == root) {
-      http.Handle("/", http.HandlerFunc(getHandler(assetsDir, file.Name())))
-      log.Printf("\tRegistered %v to /\n", file.Name())
+    http.Handle(route, http.HandlerFunc(getHandler(asset, string(value))))
+    if (asset == root) {
+      http.Handle("/", http.HandlerFunc(getHandler(asset, string(value))))
+      log.Printf("\tRegistered %v to /\n", asset)
     }
-    log.Printf("\tRegistered %v to %v\n", file.Name(), route)
+    log.Printf("\tRegistered %v to %v\n", asset, route)
   }
 }

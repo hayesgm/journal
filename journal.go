@@ -1,9 +1,7 @@
 package main
 
 import (
-  "os"
   "log"
-  "path"
   "github.com/hayesgm/journal/server"
   "github.com/hayesgm/mirrors"
   "net/http"
@@ -19,13 +17,7 @@ import (
 */
 
 func registerStaticAssets() {
-  wd, err := os.Getwd()
-  if (err != nil) {
-    log.Fatal("Unable to get cwd", err)
-  }
-  assetsDir := path.Join(wd, "assets")
-
-  server.RegisterAssets(assetsDir, "journal.html")
+  server.RegisterAssets("journal.html")
 }
 
 func main() {
