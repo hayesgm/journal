@@ -5,8 +5,9 @@
 FROM centos
 MAINTAINER Geoffrey Hayes <hayesgm@gmail.com>
 
-RUN git clone https://github.com/hayesgm/journal /srv/journal && cd /srv/journal
+RUN mkdir -p /srv/journal
+RUN wget https://github.com/hayesgm/journal/releases/download/v0.0.1pre/journal.linux /srv/journal/journal
 
-ENTRYPOINT ["/srv/journal.linux"]
+ENTRYPOINT ["/srv/journal"]
 
 EXPOSE 80:2222
