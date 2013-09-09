@@ -34,15 +34,15 @@ func main() {
   flag.StringVar(&domain, "domain", "", "domain to host journal")
   flag.StringVar(&token, "token", "", "dnsimple token to manage domain")
   flag.Parse()
-  
+
   if len(domain) == 0 || len(token) == 0 {
     log.Fatal("Must include domain and token")
   }
 
   registerStaticAssets()
   
-  mirrors.Join(etcd.NewClient(), domain, token)
-  
+  mirrors.Join(etcd.NewClient(), domain, token, "journal")
+
   err := http.ListenAndServe(":2222", nil)
   if err != nil {
     log.Fatal("Failed to launch server", err)
