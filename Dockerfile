@@ -6,7 +6,7 @@ FROM centos
 MAINTAINER Geoffrey Hayes <hayesgm@gmail.com>
 
 RUN mkdir -p /srv/journal
-RUN wget https://github.com/hayesgm/journal/releases/download/v0.0.1pre/journal.linux -O /srv/journal/journal
+RUN wget https://github.com/hayesgm/journal/releases/download/v0.0.2pre/journal.linux -O /srv/journal/journal
 RUN chmod +x /srv/journal/journal
 
 ENTRYPOINT ["/srv/journal/journal"]
