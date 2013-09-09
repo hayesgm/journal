@@ -25,3 +25,5 @@ conf
 info
 log
 snapshot/**
+journal
+journal.linux
